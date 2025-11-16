@@ -1,0 +1,3370 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Open Library - Thư viện sách điện tử</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --color-navy: #1a2a44;
+        --color-primary: #007bff;
+        --color-success: #28a745;
+        --color-warning: #ffc107;
+        --color-background: #f4f7f9;
+      }
+
+      body {
+        background: var(--color-background);
+        font-family: "Inter", sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+        padding-top: 105px;
+        color: #343a40;
+        line-height: 1.6;
+      }
+      p,
+      li {
+        line-height: 1.6;
+        font-size: 0.9rem;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-weight: 700;
+        color: #212529;
+      }
+      a {
+        color: var(--color-primary);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      a:hover {
+        color: #0056b3;
+      }
+
+      .btn {
+        font-weight: 600;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+      }
+      .btn-primary {
+        background-color: var(--color-primary);
+        border-color: var(--color-primary);
+      }
+      .btn-primary:hover {
+        background: #0056b3;
+        border-color: #0056b3;
+        transform: translateY(-1px);
+      }
+      .btn-warning {
+        background-color: var(--color-warning);
+        border-color: var(--color-warning);
+        color: #212529;
+      }
+      .btn-warning:hover {
+        background-color: #e0a800;
+        border-color: #e0a800;
+        transform: translateY(-1px);
+      }
+      .btn-success {
+        background: var(--color-success);
+        border-color: var(--color-success);
+      }
+      .btn-success:hover {
+        background: #1e7e34;
+        border-color: #1e7e34;
+        transform: translateY(-1px);
+      }
+      .btn-borrowed {
+        background-color: #6c757d;
+        color: white;
+        border: 1px solid #6c757d;
+        cursor: not-allowed;
+        opacity: 0.8;
+      }
+
+      .book-rating {
+        color: var(--color-warning);
+        font-size: 1rem;
+        font-weight: 600;
+      }
+
+      .book-status {
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 3px 10px;
+        border-radius: 50px;
+        display: inline-block;
+        margin-bottom: 5px;
+        letter-spacing: 0.5px;
+      }
+      .status-available {
+        background-color: #d4edda;
+        color: #155724;
+      }
+      .status-borrowed {
+        background-color: #fff3cd;
+        color: #856404;
+      }
+      .status-guest {
+        background-color: #e9ecef;
+        color: #6c757d;
+      }
+
+      .navbar {
+        background-color: var(--color-navy);
+        border-bottom: 3px solid var(--color-primary);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+      .navbar .navbar-brand {
+        font-size: 1.7rem;
+        font-weight: 800;
+      }
+      .navbar .nav-link {
+        color: rgba(255, 255, 255, 0.8) !important;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+      .navbar .nav-link:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white !important;
+      }
+      .navbar .nav-link.active {
+        background-color: var(--color-primary);
+        color: white !important;
+        font-weight: 600;
+      }
+      .profile-dropdown-toggle {
+        background-color: rgba(255, 255, 255, 0.15);
+        padding: 6px 15px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: white;
+        font-weight: 600;
+        transition: background-color 0.3s;
+      }
+      .profile-dropdown-toggle:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+      }
+      .profile-dropdown-toggle .fa-user {
+        color: var(--color-warning);
+        background-color: rgba(255, 193, 7, 0.2);
+        padding: 5px 8px;
+        border-radius: 5px;
+      }
+
+      .search-container {
+        max-width: 450px;
+      }
+      #searchInput {
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 8px;
+        font-size: 0.9rem;
+        padding-left: 35px;
+      }
+
+      #heroBanner {
+        background: #e9f2f8;
+        padding: 70px 0;
+        margin-bottom: 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      }
+      #heroBanner h1 {
+        font-size: 3.2rem;
+        font-weight: 800;
+        color: var(--color-navy);
+      }
+      #heroBanner .lead {
+        font-size: 1.15rem;
+        color: #5a6268;
+        margin-bottom: 30px;
+      }
+
+      .section-title {
+        font-weight: 700;
+        color: var(--color-navy);
+        border-left: 5px solid var(--color-primary);
+        padding-left: 15px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        margin-bottom: 30px;
+        display: block;
+      }
+
+      .card-book {
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e9ecef;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+      .card-book:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+      .book-cover-container {
+        padding: 10px;
+        background-color: #ffffff;
+        height: 190px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
+      .book-cover {
+        max-height: 100%;
+        width: auto;
+        object-fit: contain;
+        border-radius: 5px;
+      }
+      .card-book .card-title {
+        font-size: 1rem;
+        font-weight: 600;
+        min-height: 48px;
+        position: relative;
+        padding-right: 25px;
+      }
+      .card-book .favorite {
+        position: absolute;
+        right: 0;
+        top: 5px;
+        cursor: pointer;
+        color: #dc3545;
+        transition: transform 0.2s;
+        font-size: 1.1rem;
+      }
+      .card-book .favorite:hover {
+        transform: scale(1.2);
+      }
+
+      /* Featured Book */
+      .featured-content {
+        padding: 30px;
+      }
+      .featured-cover {
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      #profilePage .card {
+        border-radius: 12px;
+      }
+      .stat-card {
+        text-align: center;
+        padding: 20px;
+        background: #ffffff;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .stat-card:hover {
+        background: #f0f7ff;
+        transform: translateY(-2px) scale(1.03);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.08);
+      }
+      .stat-card .stat-value {
+        font-size: 2.5rem; 
+        font-weight: 900;
+        transition: color 0.3s;
+      }
+      .stat-card:hover .stat-value {
+        color: var(--color-navy);
+      }
+      .stat-card .stat-label {
+        font-weight: 500;
+        color: #6c757d;
+      }
+      #profileTabs .nav-link {
+        font-weight: 600;
+      }
+      #profileTabs .nav-link.active {
+        color: var(--color-navy);
+        border-bottom: 3px solid var(--color-primary);
+        background-color: #f8f9fa;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+      .book-list-item {
+        border: 1px solid #dee2e6;
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        transition: all 0.2s;
+      }
+      .book-list-item:hover {
+        background-color: #fcfcfc;
+        border-color: #c0c0c0;
+      }
+      .text-book {
+        font-style: italic;
+        font-weight: 500;
+        color: #007bff;
+      }
+
+      .history-list {
+        list-style: none;
+        padding: 0;
+        position: relative;
+        padding-left: 20px;
+        border-left: 2px solid #e9ecef;
+      }
+      .history-item {
+        position: relative;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+      }
+      .history-item::before {
+        content: "";
+        position: absolute;
+        left: -29px;
+        top: 5px;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background-color: #1a2a44;
+        border: 3px solid var(--color-background);
+      }
+      .history-item.success::before {
+        background-color: var(--color-success);
+      }
+      .history-item.warning::before {
+        background-color: var(--color-warning);
+      }
+      .history-item.info::before {
+        background-color: var(--color-primary);
+      }
+      .history-item.error::before {
+        background-color: #dc3545;
+      }
+
+      .history-icon {
+        font-size: 1.1rem;
+        color: #6c757d;
+        margin-top: 5px;
+      }
+      .history-content {
+        flex-grow: 1;
+        font-size: 0.9rem;
+      }
+      .history-time {
+        font-size: 0.75rem;
+        color: #999;
+        align-self: flex-start;
+        white-space: nowrap;
+      }
+
+      .contribution-card {
+        background: #ffffff;
+        border-left: 5px solid var(--color-primary);
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      }
+      .contribution-stats {
+        background-color: #f0f7ff;
+        border-radius: 8px;
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.03);
+      }
+      .contribution-stat-value {
+        color: var(--color-navy);
+        font-weight: 800;
+        font-size: 1.8rem;
+      }
+
+      #bookModal .modal-dialog {
+        max-width: 950px;
+      }
+      #modalActions .btn {
+        padding: 10px;
+        font-size: 1rem;
+      }
+      #pdfIframeContainer {
+        border: 1px solid #dee2e6;
+      }
+
+      footer {
+        background-color: #213554;
+        color: #ffffff;
+        padding: 30px 0 15px;
+        margin-top: 50px;
+      }
+      footer h5 {
+        color: white;
+        font-weight: 700;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+      }
+      footer a {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.9rem;
+      }
+      footer a:hover {
+        color: white;
+      }
+
+      @media (max-width: 991.98px) {
+        body {
+          padding-top: 130px;
+        }
+        .navbar {
+          padding-bottom: 0;
+        }
+        .navbar-top {
+          flex-wrap: wrap;
+        }
+        .search-container {
+          margin: 10px 0;
+          max-width: 100%;
+          order: 3;
+        }
+        .navbar-bottom {
+          padding-top: 0;
+        }
+        .book-cover-container {
+          height: 160px;
+        }
+        .card-book .card-title {
+          min-height: 40px;
+          font-size: 0.9rem;
+        }
+      }
+      @media (max-width: 575.98px) {
+        .card-book .card-title {
+          min-height: 48px;
+          font-size: 1rem;
+        }
+        .book-cover-container {
+          height: 200px;
+        }
+        #heroBanner h1 {
+          font-size: 2.2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="preloader"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #ffffff;
+        z-index: 99999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 1;
+        transition: opacity 0.5s;
+      "
+    >
+      <div
+        class="spinner"
+        style="
+          width: 50px;
+          height: 50px;
+          border: 5px solid #f3f3f3;
+          border-top: 5px solid var(--color-navy);
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        "
+      ></div>
+    </div>
+    <style>
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+      <div class="header-container container-fluid">
+        <div
+          class="navbar-top d-flex align-items-center justify-content-between w-100 py-2"
+        >
+          <a
+            class="navbar-brand fw-bold"
+            style="color: white !important"
+            href="#"
+            id="homeLink"
+            ><i class="fas fa-book-open me-2"></i> Open Library</a
+          >
+
+          <div id="authActions" class="d-flex align-items-center">
+            <button
+              class="btn btn-sm btn-warning text-dark me-2 fw-bold"
+              id="btnLoginRegister"
+              style="display: none"
+              onclick="promptLogin()"
+            >
+              <i class="fas fa-sign-in-alt me-1"></i> Đăng nhập
+            </button>
+
+            <div class="dropdown" id="profileDropdown" style="display: none">
+              <a
+                class="profile-dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="fas fa-user"></i>
+                <span id="navUserName">Tài khoản</span>
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-end shadow-lg border-0 mt-2"
+              >
+                <li>
+                  <h6 class="dropdown-header">
+                    Xin chào, <span id="dropdownUserName"></span>
+                  </h6>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    onclick="handleNavClick('profile')"
+                    ><i class="fas fa-user-circle me-2 text-primary"></i> Trang
+                    cá nhân</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    onclick="handleNavClick('favorites', true)"
+                    ><i class="fas fa-heart me-2 text-danger"></i> Sách yêu
+                    thích</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    onclick="handleNavClick('borrowed', true)"
+                    ><i class="fas fa-exchange-alt me-2 text-warning"></i> Sách
+                    đang mượn</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="#" id="btnLogout"
+                    ><i class="fas fa-sign-out-alt me-2"></i> Đăng xuất</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <button
+            class="navbar-toggler text-white border-white"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarContent"
+          >
+            <span class="fas fa-bars"></span>
+          </button>
+        </div>
+
+        <div
+          class="navbar-bottom w-100 bg-opacity-75"
+          style="background-color: #213554"
+        >
+          <div
+            class="collapse navbar-collapse justify-content-between"
+            id="navbarContent"
+          >
+            <ul class="navbar-nav mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  id="navHomeLink"
+                  href="#"
+                  onclick="handleNavClick('home')"
+                  ><i class="fas fa-home me-1"></i> Trang Chủ</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="navCatalogLink"
+                  href="#"
+                  onclick="handleNavClick('catalog')"
+                  ><i class="fas fa-book me-1"></i> Danh Mục Sách</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="navContributeLink"
+                  href="#"
+                  onclick="handleNavClick('contributionPage')"
+                  ><i class="fas fa-hands-helping me-1"></i> Đóng Góp</a
+                >
+              </li>
+            </ul>
+            <form
+              class="d-flex search-container position-relative py-2 py-lg-0 me-lg-4"
+              role="search"
+              onsubmit="return false"
+            >
+              <input
+                id="searchInput"
+                class="form-control me-2 ps-4"
+                type="search"
+                placeholder="Tìm kiếm nhanh..."
+              />
+              <i
+                class="fas fa-search position-absolute"
+                style="
+                  left: 12px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  color: #aaa;
+                "
+              ></i>
+            </form>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container py-4">
+      <div id="heroBanner" class="animate__animated animate__fadeIn">
+        <div class="container-sm text-center">
+          <h1>Lan Tỏa Tri Thức 💡 Cộng Đồng</h1>
+          <p class="lead">
+            Hàng ngàn đầu sách điện tử miễn phí đang chờ bạn khám phá. Đăng nhập
+            để mượn và đọc ngay!
+          </p>
+          <button
+            class="btn btn-lg btn-primary"
+            onclick="document.getElementById('catalogTitle').scrollIntoView({ behavior: 'smooth' });"
+          >
+            <i class="fas fa-eye me-1"></i> Khám phá Danh Mục
+          </button>
+        </div>
+      </div>
+
+      <div class="content-wrapper">
+        <section id="hotBooksSection" class="mb-5" style="display: none">
+          <h3 class="section-title">
+            <i class="fas fa-fire me-2"></i> Sách Đang Xu Hướng Tuần Này
+          </h3>
+          <div id="hotBooksContainer" class="row"></div>
+        </section>
+
+        <section id="featuredBookSection" class="mb-5" style="display: none">
+          <h3 class="section-title">
+            <i class="fas fa-star me-2"></i> Sách Đề Xuất Hôm Nay
+          </h3>
+          <div class="card shadow-sm border-0">
+            <div id="featuredBookContent" class="row g-0"></div>
+          </div>
+        </section>
+
+        <div
+          id="profilePage"
+          style="display: none"
+          class="animate__animated animate__fadeIn"
+        >
+          <h3 class="section-title mb-4">
+            <i class="fas fa-user-circle me-2"></i> Trang Cá Nhân Của Bạn
+          </h3>
+
+          <div class="row mb-4 g-3">
+            <div class="col-md-4">
+              <div
+                class="card stat-card border-danger-subtle shadow-sm"
+                onclick="handleNavClick('favorites', true)"
+              >
+                <i class="fas fa-heart fa-2x text-danger mb-2"></i>
+                <div class="stat-value text-danger" id="favoritesCount">0</div>
+                <div class="stat-label">Sách Yêu Thích</div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div
+                class="card stat-card border-warning-subtle shadow-sm"
+                onclick="handleNavClick('borrowed', true)"
+              >
+                <i class="fas fa-exchange-alt fa-2x text-warning mb-2"></i>
+                <div class="stat-value text-warning" id="borrowedCount">0</div>
+                <div class="stat-label">Sách Đang Mượn</div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div
+                class="card stat-card border-info-subtle shadow-sm"
+                onclick="handleNavClick('contributionPage')"
+              >
+                <i class="fas fa-hands-helping fa-2x text-info mb-2"></i>
+                <div class="stat-value text-info" id="viewCount">0</div>
+                <div class="stat-label">Đóng Góp Đã Gửi</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card p-4 shadow-lg border-0">
+            <div class="row">
+              <div class="col-md-3 border-end">
+                <div class="card p-3 mb-4 text-center border-0">
+                  <i class="fas fa-user-tie fa-6x text-primary mb-3"></i>
+                  <h5 class="fw-bold text-primary" id="profileUserName"></h5>
+                  <p
+                    class="text-muted mb-1"
+                    id="profileUserEmail"
+                    style="font-size: 0.9rem"
+                  ></p>
+                  <hr />
+                  <p class="mb-2" style="font-size: 0.8rem">
+                    <i class="fas fa-calendar-alt me-1 text-success"></i> Tham
+                    gia từ:
+                    <span
+                      class="fw-bold text-success"
+                      id="accountCreatedDate"
+                    ></span>
+                  </p>
+                  <button
+                    class="btn btn-sm btn-outline-secondary mt-2 w-100"
+                    data-bs-toggle="modal"
+                    data-bs-target="#changePasswordModal"
+                  >
+                    <i class="fas fa-key me-1"></i> Đổi Mật Khẩu
+                  </button>
+                </div>
+              </div>
+
+              <div class="col-md-9">
+                <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link active"
+                      id="info-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#info"
+                      type="button"
+                      role="tab"
+                    >
+                      <i class="fas fa-info-circle me-1"></i> Tổng quan
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="borrowed-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#borrowed"
+                      type="button"
+                      role="tab"
+                    >
+                      <i class="fas fa-list-alt me-1"></i> Đang Mượn
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="favorites-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#favorites"
+                      type="button"
+                      role="tab"
+                    >
+                      <i class="fas fa-heart me-1"></i> Yêu thích
+                    </button>
+                  </li>
+                </ul>
+                <div class="tab-content pt-3">
+                  <div
+                    class="tab-pane fade show active"
+                    id="info"
+                    role="tabpanel"
+                  >
+                    <h6>
+                      <i class="fas fa-history me-2"></i> Lịch Sử Hoạt Động Gần
+                      Đây
+                    </h6>
+                    <p class="text-muted" style="font-size: 0.85rem">
+                      Các hoạt động quan trọng của bạn được ghi lại dưới đây
+                      (giới hạn 10 hoạt động gần nhất).
+                    </p>
+                    <ul id="activityHistoryList" class="history-list"></ul>
+                  </div>
+                  <div class="tab-pane fade" id="borrowed" role="tabpanel">
+                    <h6>Các sách bạn đang mượn</h6>
+                    <div id="borrowedBooksList" class="row pt-3 g-2"></div>
+                  </div>
+                  <div class="tab-pane fade" id="favorites" role="tabpanel">
+                    <h6>Các sách bạn yêu thích</h6>
+                    <div id="favoriteBooksList" class="row pt-3 g-2"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          id="contributionPage"
+          style="display: none"
+          class="animate__animated animate__fadeIn"
+        >
+          <h3 class="section-title mb-4">
+            <i class="fas fa-hands-helping me-2"></i> Đóng Góp Với Open Library
+          </h3>
+
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <div class="contribution-card">
+                <h4 class="text-primary mb-3">Sứ mệnh: Lan tỏa tri thức</h4>
+                <p class="lead text-muted" style="font-size: 1rem">
+                  Mỗi đóng góp của bạn đều làm cho thư viện của chúng ta phong
+                  phú hơn và giúp cộng đồng phát triển.
+                </p>
+
+                <div class="contribution-stats row mb-4 p-3 g-2">
+                  <div class="col-md-6 text-center py-2 border-end">
+                    <div
+                      class="contribution-stat-value"
+                      id="totalContributions"
+                    >
+                      53
+                    </div>
+                    <div class="text-muted">Tổng số đóng góp đã duyệt</div>
+                  </div>
+                  <div class="col-md-6 text-center py-2">
+                    <div class="contribution-stat-value" id="contributorCount">
+                      12
+                    </div>
+                    <div class="text-muted">Số người đóng góp tích cực</div>
+                  </div>
+                </div>
+
+                <h5 class="mb-3 fw-bold">
+                  <i class="fas fa-paper-plane me-2 text-primary"></i> Chúng tôi
+                  hoan nghênh:
+                </h5>
+                <ul class="list-unstyled">
+                  <li>
+                    <i class="fas fa-check-circle text-success me-2"></i> **Sách
+                    điện tử (Ebook/PDF)**
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle text-success me-2"></i> **Tài
+                    liệu học thuật/Nghiên cứu**
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle text-success me-2"></i>
+                    **Đường link/Nguồn sách uy tín**
+                  </li>
+                </ul>
+
+                <div class="d-grid mt-4">
+                  <button
+                    class="btn btn-lg btn-success"
+                    data-bs-toggle="modal"
+                    data-bs-target="#contributionModal"
+                    onclick="fillContributionForm()"
+                  >
+                    <i class="fas fa-plus me-2"></i> Gửi Đóng Góp Của Bạn
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="card p-4 shadow-sm h-100 border-0">
+                <h5 class="card-title text-info border-bottom pb-2 mb-3">
+                  <i class="fas fa-list-alt me-2"></i> Lịch Sử Đóng Góp Của Tôi
+                </h5>
+                <div id="myContributionsContainer">
+                  <p class="text-muted" style="font-size: 0.9rem">
+                    Vui lòng đăng nhập để theo dõi lịch sử và trạng thái các
+                    đóng góp đã gửi.
+                  </p>
+                  <button
+                    class="btn btn-sm btn-outline-primary w-100"
+                    onclick="promptLogin()"
+                  >
+                    <i class="fas fa-sign-in-alt me-1"></i> Đăng nhập
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-5">
+            <div class="col-12">
+              <h4 class="section-title">
+                <i class="fas fa-thumbs-up me-2"></i> Những Đóng Góp Tiêu Biểu
+              </h4>
+              <div class="row g-3" id="topContributionsList">
+                <div class="col-md-4">
+                  <div class="card p-3 h-100 border-success-subtle shadow-sm">
+                    <p
+                      class="mb-1 fw-bold text-success"
+                      style="font-size: 0.9rem"
+                    >
+                      <i class="fas fa-check-circle me-1"></i> Sách: Lịch sử
+                      Trái Đất
+                    </p>
+                    <p class="mb-1 text-muted" style="font-size: 0.85rem">
+                      Người gửi: Anonymous
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card p-3 h-100 border-success-subtle shadow-sm">
+                    <p
+                      class="mb-1 fw-bold text-success"
+                      style="font-size: 0.95rem"
+                    >
+                      <i class="fas fa-check-circle me-1"></i> Tài liệu: Báo cáo
+                      Khoa học XYZ
+                    </p>
+                    <p class="mb-1 text-muted" style="font-size: 0.85rem">
+                      Người gửi: Nguyễn B
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card p-3 h-100 border-success-subtle shadow-sm">
+                    <p
+                      class="mb-1 fw-bold text-success"
+                      style="font-size: 0.95rem"
+                    >
+                      <i class="fas fa-check-circle me-1"></i> Link: Kho sách Kỹ
+                      năng mềm
+                    </p>
+                    <p class="mb-1 text-muted" style="font-size: 0.85rem">
+                      Người gửi: Độc giả A
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="catalogArea" class="row g-4 animate__animated animate__fadeIn">
+          <div class="col-lg-3">
+            <div
+              id="authPanel"
+              class="card shadow-sm mb-4 animate__animated animate__fadeInLeft"
+              style="display: none"
+            >
+              <div class="card-body">
+                <h6 id="authTitle" class="text-primary mb-3">
+                  <i class="fas fa-sign-in-alt"></i> Đăng nhập
+                </h6>
+                <form id="authForm">
+                  <div class="mb-3" id="authNameDiv" style="display: none">
+                    <label class="form-label fw-bold" style="font-size: 0.9rem"
+                      >Tên của bạn</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      id="authName"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label fw-bold" style="font-size: 0.9rem"
+                      >Email đăng nhập</label
+                    >
+                    <input
+                      type="email"
+                      class="form-control form-control-sm"
+                      id="authEmail"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label fw-bold" style="font-size: 0.9rem"
+                      >Mật khẩu</label
+                    >
+                    <input
+                      type="password"
+                      class="form-control form-control-sm"
+                      id="authPassword"
+                      required
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-sm w-100"
+                    id="authBtn"
+                  >
+                    Đăng nhập
+                  </button>
+                </form>
+                <p class="mt-3 text-center mb-0">
+                  <span
+                    id="toggleAuth"
+                    style="
+                      cursor: pointer;
+                      color: #007bff;
+                      font-weight: 600;
+                      font-size: 0.9rem;
+                    "
+                    >Chưa có tài khoản? Đăng ký ngay!</span
+                  >
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="card shadow-sm animate__animated animate__fadeInLeft mb-4"
+              id="filterPanel"
+            >
+              <div class="card-body">
+                <h6 class="card-title text-primary mb-3">
+                  <i class="fas fa-filter me-2"></i> Lọc & Sắp xếp
+                </h6>
+                <label class="form-label mb-1 fw-bold" style="font-size: 0.9rem"
+                  >Thể loại:</label
+                >
+                <select
+                  id="categoryFilter"
+                  class="form-select mb-3 form-select-sm"
+                >
+                  <option value="All">Tất cả</option>
+                </select>
+                <label class="form-label mb-1 fw-bold" style="font-size: 0.9rem"
+                  >Năm xuất bản:</label
+                >
+                <select id="yearFilter" class="form-select mb-3 form-select-sm">
+                  <option value="All">Tất cả các năm</option>
+                </select>
+                <label class="form-label mb-1 fw-bold" style="font-size: 0.9rem"
+                  >Số trang:</label
+                >
+                <select id="pageFilter" class="form-select mb-3 form-select-sm">
+                  <option value="All">Tất cả</option>
+                  <option value="<200">Dưới 200 trang</option>
+                  <option value="200-500">200 - 500 trang</option>
+                  <option value=">500">Trên 500 trang</option>
+                </select>
+                <label class="form-label mb-1 fw-bold" style="font-size: 0.9rem"
+                  >Sắp xếp:</label
+                >
+                <select id="sortOption" class="form-select form-select-sm">
+                  <option value="titleAsc">Tên (A-Z)</option>
+                  <option value="titleDesc">Tên (Z-A)</option>
+                  <option value="ratingDesc">Đánh giá cao nhất</option>
+                  <option value="publishedYearDesc">Mới nhất</option>
+                </select>
+              </div>
+            </div>
+
+            <div
+              class="card shadow-sm d-none d-lg-block animate__animated animate__fadeInLeft"
+              style="--animate-delay: 0.2s"
+            >
+              <div class="card-body">
+                <h6 class="card-title text-primary">
+                  <i class="fas fa-info-circle"></i> Về Thư viện
+                </h6>
+                <p style="font-size: 0.85rem">
+                  Open Library là dự án phi lợi nhuận, cung cấp nguồn sách miễn
+                  phí cho cộng đồng.
+                </p>
+                <button
+                  class="btn btn-sm btn-outline-secondary w-100"
+                  id="btnContribute"
+                >
+                  <i class="fas fa-hands-helping me-1"></i> Đóng góp
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-9">
+            <h4
+              id="catalogTitle"
+              class="mb-4 fw-bold animate__animated animate__fadeIn"
+            >
+              📚 Tất Cả Sách Hiện Có
+            </h4>
+            <div id="viewContainer" class="row g-4"></div>
+
+            <nav
+              aria-label="Book Pagination"
+              class="mt-4 animate__animated animate__fadeInUp"
+              style="--animate-delay: 0.5s"
+            >
+              <ul
+                class="pagination justify-content-center"
+                id="pagination"
+              ></ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="bookModal" tabindex="-1">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content border-0 shadow-lg">
+          <div class="modal-header bg-light">
+            <h5 class="modal-title text-primary" id="bookModalTitle">
+              <i class="fas fa-info-circle me-2"></i> Chi tiết sách
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body p-4">
+            <div class="row">
+              <div class="col-md-4 text-center border-end">
+                <img
+                  id="modalCover"
+                  class="img-fluid mb-3"
+                  style="
+                    max-height: 350px;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                  "
+                  alt="Bìa sách"
+                />
+                <h4 id="modalTitle" class="fw-bold text-primary mt-3"></h4>
+                <p
+                  class="text-muted mb-2"
+                  id="modalAuthor"
+                  style="font-size: 1rem"
+                ></p>
+                <p id="modalRating" class="mb-3"></p>
+
+                <div id="modalActions" class="d-grid gap-2 mb-3 px-3"></div>
+                <div class="text-start px-3">
+                  <p style="font-size: 0.9rem">
+                    <b>Thể loại:</b> <span id="modalCategory"></span>
+                  </p>
+                  <p style="font-size: 0.9rem">
+                    <b>ISBN:</b> <span id="modalISBN"></span>
+                  </p>
+                  <p style="font-size: 0.9rem">
+                    <b>Năm XB:</b> <span id="modalPublishedYear"></span>
+                  </p>
+                  <p style="font-size: 0.9rem">
+                    <b>Số trang:</b> <span id="modalPages"></span>
+                  </p>
+                </div>
+              </div>
+
+              <div class="col-md-8">
+                <ul class="nav nav-tabs" id="bookTabs" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link active"
+                      id="desc-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#desc"
+                      type="button"
+                      role="tab"
+                    >
+                      <i class="fas fa-file-alt me-1"></i> Mô Tả Chi Tiết
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="preview-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#preview"
+                      type="button"
+                      role="tab"
+                    >
+                      <i class="fas fa-eye me-1"></i> Xem Trước
+                    </button>
+                  </li>
+                </ul>
+                <div class="tab-content pt-3">
+                  <div
+                    class="tab-pane fade show active"
+                    id="desc"
+                    role="tabpanel"
+                  >
+                    <p id="modalDescription" class="text-justify"></p>
+                  </div>
+                  <div class="tab-pane fade" id="preview" role="tabpanel">
+                    <div
+                      id="pdfIframeContainer"
+                      style="
+                        height: 500px;
+                        border: 1px solid #ccc;
+                        border-radius: 8px;
+                        overflow: hidden;
+                      "
+                    >
+                      <iframe
+                        id="pdfIframe"
+                        src=""
+                        width="100%"
+                        height="100%"
+                        frameborder="0"
+                      ></iframe>
+                    </div>
+                    <p class="mt-2 text-muted" style="font-size: 0.8rem">
+                      <i class="fas fa-info-circle me-1"></i> Chức năng xem
+                      trước có thể không hoạt động trên một số trình duyệt.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="contributionModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-success">
+              <i class="fas fa-hand-holding-heart me-2"></i> Phiếu Đóng Góp
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-muted">
+              Cảm ơn bạn đã muốn đóng góp! Vui lòng điền thông tin sách/tài liệu
+              bạn muốn chia sẻ.
+            </p>
+            <form id="contributionForm">
+              <div class="mb-3">
+                <label class="form-label fw-bold"
+                  >Tên bạn (không bắt buộc)</label
+                >
+                <input type="text" class="form-control" id="contributorName" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold"
+                  >Email liên hệ <span class="text-danger">*</span></label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="contributorEmail"
+                  required
+                />
+                <div id="emailHelp" class="form-text">
+                  Đây là email chúng tôi sẽ liên hệ lại với bạn.
+                </div>
+              </div>
+              <hr />
+              <div class="mb-3">
+                <label class="form-label fw-bold"
+                  >Tiêu đề sách/tài liệu đóng góp
+                  <span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="contributedTitle"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold"
+                  >Mô tả ngắn/Đường link tài liệu (PDF, Google Drive...)
+                  <span class="text-danger">*</span></label
+                >
+                <textarea
+                  class="form-control"
+                  id="contributedLink"
+                  rows="3"
+                  required
+                ></textarea>
+                <div class="form-text">
+                  Vui lòng cung cấp link tải/đọc hoặc link giới thiệu chi tiết.
+                </div>
+              </div>
+              <button type="submit" class="btn btn-success w-100 mt-3">
+                <i class="fas fa-paper-plane"></i> Gửi Đóng Góp
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="changePasswordModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-light">
+            <h5 class="modal-title text-warning">
+              <i class="fas fa-key me-2"></i> Đổi Mật Khẩu
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="changePasswordForm">
+              <div class="mb-3">
+                <label class="form-label fw-bold">Mật khẩu hiện tại</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="currentPassword"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">Mật khẩu mới</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="newPassword"
+                  required
+                />
+                <div class="form-text">Mật khẩu phải dài ít nhất 6 ký tự.</div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">Xác nhận mật khẩu mới</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="confirmNewPassword"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-success w-100 mt-3">
+                <i class="fas fa-save"></i> Cập Nhật Mật Khẩu
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <h5 class="fw-bold">
+              <i class="fas fa-book-open"></i> Open Library
+            </h5>
+            <p style="font-size: 0.9rem">
+              Nền tảng đọc sách trực tuyến miễn phí và phi lợi nhuận.
+            </p>
+          </div>
+          <div class="col-md-4">
+            <h5>Liên kết nhanh</h5>
+            <ul class="list-unstyled">
+              <li>
+                <a href="#" onclick="handleNavClick('home')">Trang Chủ</a>
+              </li>
+              <li>
+                <a href="#" onclick="handleNavClick('catalog')"
+                  >Danh Mục Sách</a
+                >
+              </li>
+              <li>
+                <a href="#" onclick="handleNavClick('contributionPage')"
+                  >Đóng Góp</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h5>Liên hệ</h5>
+            <p style="font-size: 0.9rem">
+              <i class="fas fa-envelope me-2"></i> contact@openlibrary.vn
+            </p>
+            <p style="font-size: 0.9rem">
+              <i class="fas fa-map-marker-alt me-2"></i> TP. Hồ Chí Minh, Việt
+              Nam
+            </p>
+          </div>
+        </div>
+        <hr style="border-color: rgba(255, 255, 255, 0.1)" />
+        <div class="text-center" style="font-size: 0.85rem">
+          <p>&copy; 2025 Open Library. Bảo lưu mọi quyền.</p>
+        </div>
+      </div>
+    </footer>
+
+    <div
+      id="toastContainer"
+      style="position: fixed; top: 100px; right: 20px; z-index: 2000"
+    >
+      <style>
+        .toast-message {
+          min-width: 250px;
+          padding: 10px 15px;
+          border-radius: 8px;
+          color: white;
+          font-size: 0.9rem;
+          margin-bottom: 10px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+          opacity: 0;
+          animation: fadeInOut 4s ease-in-out forwards;
+        }
+        .toast-success {
+          background-color: var(--color-success);
+        }
+        .toast-error {
+          background-color: #dc3545;
+        }
+        .toast-info {
+          background-color: var(--color-primary);
+        }
+
+        @keyframes fadeInOut {
+          0% {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+          10% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          90% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          100% {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+        }
+      </style>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const books = [
+        {
+          title: "Những người khốn khổ",
+          author: "Victor Hugo",
+          isbn: "123456789",
+          category: "Văn học",
+          description:
+            "Tiểu thuyết kinh điển của Victor Hugo. Câu chuyện về công lý, sự cứu rỗi và tình yêu trong xã hội Pháp thế kỷ 19.",
+          cover: "https://covers.openlibrary.org/b/id/13247454-L.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/les-miserables.pdf",
+          pages: 1463,
+          publishedYear: 1862,
+          rating: 4.5,
+          hot: true,
+        },
+        {
+          title: "Dế Mèn phiêu lưu ký",
+          author: "Tô Hoài",
+          isbn: "987654321",
+          category: "Truyện thiếu nhi",
+          description:
+            "Câu chuyện về chú dế Mèn dũng cảm. Tác phẩm kinh điển dành cho trẻ em Việt Nam.",
+          cover: "https://covers.openlibrary.org/b/id/8330756-L.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/the-adventures-of-huckleberry-finn.pdf",
+          pages: 180,
+          publishedYear: 1941,
+          rating: 5.0,
+          featured: true,
+        }, 
+        {
+          title: "Lập trình JavaScript Nâng cao",
+          author: "Nguyễn Văn A",
+          isbn: "1122334455",
+          category: "Khoa học",
+          description: "Học lập trình JS từ cơ bản đến nâng cao.",
+          cover:
+            "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1586518170i/51447094.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/dracula.pdf",
+          pages: 600,
+          publishedYear: 2022,
+          rating: 4.0,
+          hot: true,
+        },
+        {
+          title: "Nhà giả kim",
+          author: "Paulo Coelho",
+          isbn: "444444444",
+          category: "Văn học",
+          description:
+            "Câu chuyện về hành trình tìm kiếm kho báu của chàng chăn cừu Santiago.",
+          cover: "https://covers.openlibrary.org/b/id/13251783-L.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/the-alchemist.pdf",
+          pages: 208,
+          publishedYear: 1988,
+          rating: 4.8,
+        },
+        {
+          title: "Đắc nhân tâm",
+          author: "Dale Carnegie",
+          isbn: "555555555",
+          category: "Kỹ năng sống",
+          description:
+            "Nghệ thuật thu phục lòng người và gây ảnh hưởng đến người khác.",
+          cover: "https://covers.openlibrary.org/b/id/13309257-L.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/pride-and-prejudice.pdf",
+          pages: 300,
+          publishedYear: 1936,
+          rating: 4.2,
+        },
+        {
+          title: "Tâm lý học về tiền",
+          author: "Morgan Housel",
+          isbn: "666666666",
+          category: "Kinh tế",
+          description:
+            "19 câu chuyện về tiền bạc, sự may mắn và hành vi con người.",
+          cover: "https://m.media-amazon.com/images/I/41-lUuR4oBL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/the-money-psychology.pdf",
+          pages: 256,
+          publishedYear: 2020,
+          rating: 4.7,
+          hot: true,
+        },
+        {
+          title: "Sapiens: Lược sử loài người",
+          author: "Yuval Noah Harari",
+          isbn: "777777777",
+          category: "Lịch sử",
+          description:
+            "Cái nhìn toàn cảnh về lịch sử phát triển của loài người.",
+          cover: "https://m.media-amazon.com/images/I/51nJ7W0tYhL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/sapiens.pdf",
+          pages: 512,
+          publishedYear: 2011,
+          rating: 4.9,
+        },
+        {
+          title: "Tiểu thuyết 1984",
+          author: "George Orwell",
+          isbn: "888888888",
+          category: "Văn học",
+          description:
+            "Một trong những tác phẩm phản địa đàng vĩ đại nhất mọi thời đại.",
+          cover: "https://covers.openlibrary.org/b/id/13336214-L.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/1984.pdf",
+          pages: 328,
+          publishedYear: 1949,
+          rating: 4.6,
+        },
+        {
+          title: "Mật mã Da Vinci",
+          author: "Dan Brown",
+          isbn: "999999999",
+          category: "Tiểu thuyết",
+          description: "Cuốn tiểu thuyết trinh thám nổi tiếng toàn cầu.",
+          cover: "https://covers.openlibrary.org/b/id/13289047-L.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/the-da-vinci-code.pdf",
+          pages: 454,
+          publishedYear: 2003,
+          rating: 3.9,
+        },
+        {
+          title: "Vật lý lượng tử cơ bản",
+          author: "Trần Văn K",
+          isbn: "101010101",
+          category: "Khoa học",
+          description: "Giải thích các khái niệm cơ bản về vật lý lượng tử.",
+          cover: "https://m.media-amazon.com/images/I/41-jYp-0H8L.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/quantum-physics.pdf",
+          pages: 550,
+          publishedYear: 2018,
+          rating: 4.1,
+        },
+
+        // --- SÁCH MỚI ĐÃ THÊM LẦN 2 ---
+        {
+          title: "Bảy thói quen của người thành đạt",
+          author: "Stephen Covey",
+          isbn: "202020202",
+          category: "Kỹ năng sống",
+          description:
+            "Phác thảo một cách tiếp cận toàn diện, tích hợp, nguyên tắc để giải quyết các vấn đề cá nhân và chuyên nghiệp.",
+          cover: "https://m.media-amazon.com/images/I/51f84s9H6WL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/the-seven-habits.pdf",
+          pages: 384,
+          publishedYear: 1989,
+          rating: 4.7,
+        },
+        {
+          title: "Chiến Tranh và Hòa Bình",
+          author: "Leo Tolstoy",
+          isbn: "303030303",
+          category: "Văn học",
+          description:
+            "Tiểu thuyết sử thi về cuộc chiến chống Napoleon của người Nga, khám phá cuộc sống và triết lý.",
+          cover: "https://covers.openlibrary.org/b/id/13248359-L.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/war-and-peace.pdf",
+          pages: 1225,
+          publishedYear: 1869,
+          rating: 4.6,
+          hot: true,
+        },
+        {
+          title: "Thao túng tâm lý",
+          author: "Harriet Lerner",
+          isbn: "404040404",
+          category: "Tâm lý học",
+          description:
+            "Cách nhận biết và thoát khỏi các mối quan hệ kiểm soát.",
+          cover: "https://m.media-amazon.com/images/I/51wQ3m0-Q0L.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/mind-manipulation.pdf",
+          pages: 288,
+          publishedYear: 2021,
+          rating: 4.3,
+        },
+        {
+          title: "Nghệ thuật tư duy rành mạch",
+          author: "Rolf Dobelli",
+          isbn: "505050505",
+          category: "Kỹ năng sống",
+          description: "Tránh 52 lỗi tư duy phổ biến để có quyết định tốt hơn.",
+          cover: "https://m.media-amazon.com/images/I/513y17y8m5L.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/the-art-of-thinking.pdf",
+          pages: 256,
+          publishedYear: 2013,
+          rating: 4.0,
+        },
+        {
+          title: "Cơ sở Dữ liệu Quan hệ",
+          author: "Lê Văn C",
+          isbn: "606060606",
+          category: "Khoa học",
+          description: "Giới thiệu về mô hình dữ liệu quan hệ và SQL.",
+          cover: "https://m.media-amazon.com/images/I/41Kx1e15g7L.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/database-design.pdf",
+          pages: 400,
+          publishedYear: 2019,
+          rating: 4.4,
+        },
+        {
+          title: "Truyện Kiều",
+          author: "Nguyễn Du",
+          isbn: "707070707",
+          category: "Văn học",
+          description: "Kiệt tác thơ lục bát của văn học Việt Nam.",
+          cover: "https://covers.openlibrary.org/b/id/6938997-L.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/the-tale-of-kieu.pdf",
+          pages: 325,
+          publishedYear: 1820,
+          rating: 4.9,
+        },
+        {
+          title: "Cà phê cùng Tony",
+          author: "Tony Buổi Sáng",
+          isbn: "808080808",
+          category: "Kỹ năng sống",
+          description:
+            "Các bài học về kinh doanh, khởi nghiệp và thái độ sống.",
+          cover: "https://m.media-amazon.com/images/I/51d6jU3d6PL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/coffee-with-tony.pdf",
+          pages: 250,
+          publishedYear: 2014,
+          rating: 4.1,
+        },
+        {
+          title: "Cấu trúc Dữ liệu và Giải thuật",
+          author: "Phạm Thị D",
+          isbn: "909090909",
+          category: "Khoa học",
+          description:
+            "Tài liệu nền tảng cho sinh viên ngành Công nghệ thông tin.",
+          cover: "https://m.media-amazon.com/images/I/41t7+B9F65L.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/data-structures.pdf",
+          pages: 650,
+          publishedYear: 2023,
+          rating: 4.5,
+        },
+        {
+          title: "Bí mật của May Mắn",
+          author: "Alex Rovira & Fernando Trías de Bes",
+          isbn: "131313131",
+          category: "Kỹ năng sống",
+          description:
+            "Câu chuyện ngụ ngôn về cách tạo ra may mắn cho chính mình.",
+          cover: "https://m.media-amazon.com/images/I/41-3Fm7sYjL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/the-secret-of-luck.pdf",
+          pages: 128,
+          publishedYear: 2004,
+          rating: 4.2,
+        },
+        {
+          title: "Cơ học Lượng tử",
+          author: "David J. Griffiths",
+          isbn: "141414141",
+          category: "Khoa học",
+          description: "Sách giáo trình chuyên sâu về cơ học lượng tử.",
+          cover: "https://m.media-amazon.com/images/I/418sJ4E-VLL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/quantum-mechanics-introduction.pdf",
+          pages: 700,
+          publishedYear: 1999,
+          rating: 4.7,
+        },
+        {
+          title: "Ông già và biển cả",
+          author: "Ernest Hemingway",
+          isbn: "151515151",
+          category: "Văn học",
+          description:
+            "Tiểu thuyết ngắn nổi tiếng về cuộc chiến sinh tồn giữa người và thiên nhiên.",
+          cover: "https://covers.openlibrary.org/b/id/13248386-L.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/the-old-man-and-the-sea.pdf",
+          pages: 127,
+          publishedYear: 1952,
+          rating: 4.4,
+        },
+        {
+          title: "100 năm cô đơn",
+          author: "Gabriel García Márquez",
+          isbn: "161616161",
+          category: "Văn học",
+          description:
+            "Tuyệt tác văn học Mỹ Latinh, câu chuyện về gia tộc Buendía.",
+          cover: "https://covers.openlibrary.org/b/id/13251781-L.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/one-hundred-years-of-solitude.pdf",
+          pages: 417,
+          publishedYear: 1967,
+          rating: 4.8,
+        },
+        {
+          title: "Thiết kế đồ họa cơ bản",
+          author: "Trần Hữu F",
+          isbn: "171717171",
+          category: "Nghệ thuật",
+          description: "Hướng dẫn toàn diện về các nguyên tắc thiết kế đồ họa.",
+          cover: "https://m.media-amazon.com/images/I/51wXw0519aL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/graphic-design-basics.pdf",
+          pages: 350,
+          publishedYear: 2021,
+          rating: 4.3,
+        },
+        {
+          title: "Nghệ thuật bán hàng bậc cao",
+          author: "Zig Ziglar",
+          isbn: "181818181",
+          category: "Kỹ năng sống",
+          description:
+            "Các kỹ thuật và triết lý để trở thành người bán hàng xuất sắc.",
+          cover: "https://m.media-amazon.com/images/I/51tW0iJ06bL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/secrets-of-closing.pdf",
+          pages: 304,
+          publishedYear: 1984,
+          rating: 4.0,
+        },
+        {
+          title: "Lý thuyết trò chơi",
+          author: "Avinash Dixit & Barry Nalebuff",
+          isbn: "191919191",
+          category: "Kinh tế",
+          description:
+            "Ứng dụng lý thuyết trò chơi vào chiến lược kinh doanh và cuộc sống.",
+          cover: "https://m.media-amazon.com/images/I/51uT8vVlYWL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/the-art-of-strategy.pdf",
+          pages: 480,
+          publishedYear: 1991,
+          rating: 4.5,
+        },
+        {
+          title: "Tư duy nhanh và chậm",
+          author: "Daniel Kahneman",
+          isbn: "212121212",
+          category: "Tâm lý học",
+          description:
+            "Khám phá hai hệ thống chi phối cách chúng ta suy nghĩ và ra quyết định.",
+          cover: "https://m.media-amazon.com/images/I/514jG55j6TL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/thinking-fast-and-slow.pdf",
+          pages: 499,
+          publishedYear: 2011,
+          rating: 4.7,
+        },
+        {
+          title: "Thiên Chúa và Con người",
+          author: "Albert Camus",
+          isbn: "222222222",
+          category: "Triết học",
+          description:
+            "Tập hợp các tiểu luận và bài phát biểu của nhà văn đoạt giải Nobel.",
+          cover: "https://covers.openlibrary.org/b/id/13253805-L.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/the-stranger.pdf",
+          pages: 200,
+          publishedYear: 1942,
+          rating: 4.3,
+        },
+        {
+          title: "Kỹ năng giao tiếp hiệu quả",
+          author: "Zig Ziglar",
+          isbn: "232323232",
+          category: "Kỹ năng sống",
+          description:
+            "Các nguyên tắc để giao tiếp rõ ràng, thuyết phục và tạo ấn tượng tốt.",
+          cover: "https://m.media-amazon.com/images/I/51r5wQ2p6ML.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/communication-skills.pdf",
+          pages: 250,
+          publishedYear: 1998,
+          rating: 4.1,
+        },
+        {
+          title: "Tài chính Cá nhân",
+          author: "Robert Kiyosaki",
+          isbn: "242424242",
+          category: "Kinh tế",
+          description:
+            "Khái niệm cơ bản và các chiến lược đầu tư cho người mới bắt đầu.",
+          cover: "https://m.media-amazon.com/images/I/51wU0Fj1HFL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/rich-dad-poor-dad.pdf",
+          pages: 200,
+          publishedYear: 1997,
+          rating: 4.6,
+        },
+
+        {
+          title: "Sherlock Holmes: Tuyển tập",
+          author: "Arthur Conan Doyle",
+          isbn: "313131313",
+          category: "Tiểu thuyết",
+          description:
+            "Tổng hợp các vụ án kinh điển của thám tử lừng danh Sherlock Holmes.",
+          cover: "https://m.media-amazon.com/images/I/51-mYjS8QWL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/sherlock-holmes.pdf",
+          pages: 1024,
+          publishedYear: 1892,
+          rating: 4.8,
+        },
+        {
+          title: "Vũ trụ trong vỏ hạt dẻ",
+          author: "Stephen Hawking",
+          isbn: "323232323",
+          category: "Khoa học",
+          description:
+            "Giải thích về vật lý thiên văn và cơ học lượng tử một cách dễ hiểu.",
+          cover: "https://m.media-amazon.com/images/I/51-xR2tPzQL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/universe-in-a-nutshell.pdf",
+          pages: 216,
+          publishedYear: 2001,
+          rating: 4.6,
+          hot: true,
+        },
+        {
+          title: "Việt Nam Sử Lược",
+          author: "Trần Trọng Kim",
+          isbn: "333333333",
+          category: "Lịch sử",
+          description:
+            "Tác phẩm kinh điển về lịch sử Việt Nam từ thời Hồng Bàng đến năm 1920.",
+          cover: "https://m.media-amazon.com/images/I/51tE-x-UaCL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/vietnam-history.pdf",
+          pages: 650,
+          publishedYear: 1920,
+          rating: 4.9,
+        },
+        {
+          title: "Ngôn ngữ cơ thể",
+          author: "Allan Pease",
+          isbn: "343434343",
+          category: "Kỹ năng sống",
+          description:
+            "Cách đọc suy nghĩ người khác thông qua cử chỉ và biểu hiện không lời.",
+          cover: "https://m.media-amazon.com/images/I/41-lF-r8BPL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/body-language.pdf",
+          pages: 224,
+          publishedYear: 1981,
+          rating: 4.3,
+        },
+        {
+          title: "Nhà trị liệu và khách hàng",
+          author: "Irvin D. Yalom",
+          isbn: "353535353",
+          category: "Tâm lý học",
+          description:
+            "Các câu chuyện thực tế về trị liệu tâm lý, khám phá nỗi sợ hãi và ý nghĩa cuộc sống.",
+          cover: "https://m.media-amazon.com/images/I/5152q7v+QQL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/the-gift-of-therapy.pdf",
+          pages: 304,
+          publishedYear: 2002,
+          rating: 4.7,
+        },
+        {
+          title: "Đi tìm lẽ sống",
+          author: "Viktor Frankl",
+          isbn: "363636363",
+          category: "Triết học",
+          description:
+            "Cuộc đời tác giả trong trại tập trung và khám phá ý nghĩa cuộc sống (Logotherapy).",
+          cover: "https://m.media-amazon.com/images/I/51g7-1sR5PL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/mans-search-for-meaning.pdf",
+          pages: 165,
+          publishedYear: 1946,
+          rating: 4.9,
+          featured: true,
+        },
+        {
+          title: "Trí tuệ cảm xúc",
+          author: "Daniel Goleman",
+          isbn: "373737373",
+          category: "Tâm lý học",
+          description:
+            "Tại sao EQ lại quan trọng hơn IQ, và cách phát triển nó.",
+          cover: "https://m.media-amazon.com/images/I/51j1Q89bU5L.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/emotional-intelligence.pdf",
+          pages: 384,
+          publishedYear: 1995,
+          rating: 4.5,
+        },
+        {
+          title: "Quản lý dự án A-Z",
+          author: "Ken Schwaber",
+          isbn: "383838383",
+          category: "Kỹ năng sống",
+          description:
+            "Hướng dẫn thực hành quản lý dự án theo phương pháp Agile và Scrum.",
+          cover: "https://m.media-amazon.com/images/I/51m-n-8oFLL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/scrum-guide.pdf",
+          pages: 200,
+          publishedYear: 2001,
+          rating: 4.2,
+        },
+        {
+          title: "Lịch sử vạn vật",
+          author: "Bill Bryson",
+          isbn: "393939393",
+          category: "Khoa học",
+          description:
+            "Khám phá những điều cơ bản nhất của khoa học và lịch sử Trái Đất.",
+          cover: "https://m.media-amazon.com/images/I/51mN-w0-rPL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/a-short-history-of-nearly-everything.pdf",
+          pages: 544,
+          publishedYear: 2003,
+          rating: 4.6,
+        },
+        {
+          title: "Hạt giống tâm hồn",
+          author: "Jack Canfield",
+          isbn: "4040404040",
+          category: "Kỹ năng sống",
+          description:
+            "Tuyển tập những câu chuyện ý nghĩa truyền cảm hứng và niềm tin vào cuộc sống.",
+          cover: "https://m.media-amazon.com/images/I/51F8jN+o37L.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/chicken-soup-for-the-soul.pdf",
+          pages: 300,
+          publishedYear: 1993,
+          rating: 4.1,
+        },
+        {
+          title: "Triết học cho người mới bắt đầu",
+          author: "Simon Blackburn",
+          isbn: "4141414141",
+          category: "Triết học",
+          description:
+            "Giới thiệu về các khái niệm, nhà tư tưởng và trường phái triết học lớn.",
+          cover: "https://m.media-amazon.com/images/I/51i1T9M+kDL.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/philosophy-beginners.pdf",
+          pages: 350,
+          publishedYear: 1999,
+          rating: 4.0,
+        },
+        {
+          title: "Công nghệ Blockchain",
+          author: "Melanie Swan",
+          isbn: "4242424242",
+          category: "Khoa học",
+          description:
+            "Tất cả những gì cần biết về công nghệ chuỗi khối và ứng dụng của nó.",
+          cover: "https://m.media-amazon.com/images/I/41-i2o-sH8L.jpg",
+          pdf: "https://www.planetebook.com/free-ebooks/blockchain-blueprint.pdf",
+          pages: 240,
+          publishedYear: 2015,
+          rating: 4.4,
+        },
+      ];
+
+      let initialUsers = JSON.parse(localStorage.getItem("users"));
+      if (!initialUsers || initialUsers.length === 0) {
+        initialUsers = [
+          {
+            name: "Độc Giả Thử Nghiệm",
+            email: "user@test.com",
+            password: "password",
+            favorites: ["123456789", "444444444", "202020202", "323232323"],
+            borrowedBooks: [
+              {
+                isbn: "987654321",
+                borrowDate: "01/01/2025",
+                dueDate: "15/01/2025",
+              },
+              {
+                isbn: "888888888",
+                borrowDate: "10/11/2025",
+                dueDate: "24/11/2025",
+              }, 
+            ],
+            contributions: [
+              {
+                name: "Sách Hay Về Trí Tuệ Nhân Tạo",
+                link: "https://example.com/ai-book",
+                status: "Đã duyệt",
+                date: "05/11/2025",
+              },
+              {
+                name: "Tuyển tập thơ 2024",
+                link: "Đã gửi qua email",
+                status: "Đang chờ duyệt",
+                date: "10/11/2025",
+              },
+            ],
+            created: "01/01/2025",
+            updated: "15/11/2025",
+            activityHistory: [
+              {
+                time: "08:00 PM, 15/11/2025",
+                action: "Đăng nhập",
+                detail: "Đăng nhập thành công vào hệ thống.",
+                type: "info",
+              },
+              {
+                time: "05:00 PM, 15/11/2025",
+                action: "Đóng góp sách",
+                detail:
+                  'Đã gửi đóng góp sách <span class="text-book">Tuyển tập thơ 2024</span>.',
+                type: "info",
+              },
+              {
+                time: "04:00 PM, 15/11/2025",
+                action: "Mượn sách",
+                detail:
+                  'Đã mượn sách <span class="text-book">Tiểu thuyết 1984</span>. Hạn trả: 24/11/2025.',
+                type: "success",
+              },
+            ],
+          },
+        ];
+        localStorage.setItem("users", JSON.stringify(initialUsers));
+      }
+
+      let users = initialUsers;
+      let currentUser = JSON.parse(
+        localStorage.getItem("currentUser") || "null"
+      );
+
+      const bookModal = new bootstrap.Modal(
+        document.getElementById("bookModal")
+      );
+      const contributionModal = new bootstrap.Modal(
+        document.getElementById("contributionModal")
+      );
+      const changePasswordModal = new bootstrap.Modal(
+        document.getElementById("changePasswordModal")
+      );
+
+      const authPanel = document.getElementById("authPanel");
+      const profilePage = document.getElementById("profilePage");
+      const catalogArea = document.getElementById("catalogArea");
+      const hotBooksSection = document.getElementById("hotBooksSection");
+      const featuredBookSection = document.getElementById(
+        "featuredBookSection"
+      );
+      const contributionPage = document.getElementById("contributionPage");
+
+      const booksPerPage = 12;
+      let currentPage = 1;
+      let isLogin = true;
+      let isViewingFavorites = false;
+
+      function showToast(message, type = "info") {
+        const toastContainer = document.getElementById("toastContainer");
+        const toast = document.createElement("div");
+        toast.className = `toast-message toast-${type}`;
+        let icon = "";
+        if (type === "success")
+          icon = '<i class="fas fa-check-circle me-2"></i>';
+        else if (type === "error")
+          icon = '<i class="fas fa-exclamation-triangle me-2"></i>';
+        else icon = '<i class="fas fa-info-circle me-2"></i>';
+        toast.innerHTML = icon + message;
+
+        toastContainer.prepend(toast);
+
+        setTimeout(() => {
+          toast.style.opacity = "0";
+          toast.style.transform = "translateY(-20px)";
+          setTimeout(() => toast.remove(), 500);
+        }, 3500);
+      }
+
+      function getCurrentTime() {
+        return (
+          new Date().toLocaleTimeString("vi-VN", {
+            hour: "2-digit",
+            minute: "2-digit",
+          }) +
+          ", " +
+          new Date().toLocaleDateString("vi-VN")
+        );
+      }
+
+      function updateUser(user) {
+        const userIndex = users.findIndex((u) => u.email === user.email);
+
+        if (userIndex > -1) {
+          users[userIndex] = user;
+        } else {
+          users.push(user);
+        }
+
+        localStorage.setItem("users", JSON.stringify(users));
+
+        if (currentUser && currentUser.email === user.email) {
+          currentUser = user;
+          localStorage.setItem("currentUser", JSON.stringify(currentUser));
+        }
+      }
+
+      function recordActivity(action, detail, type = "info") {
+        if (!currentUser) return;
+
+        const latestUser = users.find((u) => u.email === currentUser.email);
+        if (!latestUser) return;
+
+        if (!latestUser.activityHistory) {
+          latestUser.activityHistory = [];
+        }
+
+        const activity = {
+          time: getCurrentTime(),
+          action,
+          detail,
+          type,
+        };
+
+        latestUser.activityHistory.unshift(activity);
+
+        if (latestUser.activityHistory.length > 10) {
+          latestUser.activityHistory.pop();
+        }
+
+        updateUser(latestUser);
+      }
+
+      function fillContributionForm() {
+        const contributorName = document.getElementById("contributorName");
+        const contributorEmail = document.getElementById("contributorEmail");
+
+        document.getElementById("contributedTitle").value = "";
+        document.getElementById("contributedLink").value = "";
+
+        if (currentUser) {
+          const latestUser =
+            users.find((u) => u.email === currentUser.email) || currentUser;
+
+          contributorName.value = latestUser.name || "";
+          contributorEmail.value = latestUser.email || "";
+          contributorEmail.setAttribute("disabled", "true");
+          contributorEmail.style.backgroundColor = "#e9ecef";
+          contributorName.removeAttribute("disabled");
+        } else {
+          contributorName.value = "";
+          contributorEmail.value = "";
+          contributorName.removeAttribute("disabled");
+          contributorEmail.removeAttribute("disabled");
+          contributorEmail.style.backgroundColor = "#fff";
+        }
+      }
+
+      function updateActiveNav(target) {
+        document.querySelectorAll(".navbar-nav .nav-link").forEach((link) => {
+          link.classList.remove("active");
+        });
+
+        if (target === "home") {
+          document.getElementById("navHomeLink").classList.add("active");
+        } else if (
+          target === "catalog" ||
+          target === "favorites" ||
+          target === "borrowed" ||
+          target === "profile"
+        ) {
+          document.getElementById("navCatalogLink").classList.add("active");
+        } else if (target === "contributionPage") {
+          document.getElementById("navContributeLink").classList.add("active");
+        }
+      }
+
+      function handleNavClick(target, goToProfile = false) {
+        profilePage.style.display = "none";
+        catalogArea.style.display = "none";
+        contributionPage.style.display = "none";
+        document.getElementById("heroBanner").style.display = "none";
+        hotBooksSection.style.display = "none";
+        featuredBookSection.style.display = "none";
+        authPanel.style.display = "none";
+
+        if (
+          target !== "profile" &&
+          target !== "favorites" &&
+          target !== "borrowed"
+        ) {
+          isViewingFavorites = false;
+        }
+
+        if (target === "home") {
+          catalogArea.style.display = "flex";
+          document.getElementById("heroBanner").style.display = "block";
+          hotBooksSection.style.display = "block";
+          featuredBookSection.style.display = "block";
+          document.getElementById("catalogTitle").innerHTML =
+            "📚 Tất Cả Sách Hiện Có";
+          renderHotBooks();
+          renderFeaturedBook();
+          renderCatalog(false);
+          updateActiveNav("home");
+          if (!currentUser) authPanel.style.display = "block";
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          return;
+        }
+
+        if (target === "contributionPage") {
+          contributionPage.style.display = "block";
+          renderContributionPage();
+          updateActiveNav("contributionPage");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          return;
+        }
+
+        if (
+          target === "profile" ||
+          target === "favorites" ||
+          target === "borrowed"
+        ) {
+          if (!currentUser) {
+            promptLogin();
+            return;
+          }
+
+          renderProfilePage();
+          profilePage.style.display = "block";
+
+          let tabElementId = "info-tab";
+          if (target === "favorites") tabElementId = "favorites-tab";
+          else if (target === "borrowed") tabElementId = "borrowed-tab";
+
+          const tabElement = document.getElementById(tabElementId);
+          if (tabElement) new bootstrap.Tab(tabElement).show();
+
+          if (target === "favorites" && goToProfile === false) {
+            isViewingFavorites = true;
+            renderCatalog(true);
+            document.getElementById("catalogArea").style.display = "flex";
+            document.getElementById("profilePage").style.display = "none";
+          } else {
+            isViewingFavorites = false;
+          }
+          updateActiveNav("catalog");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          return;
+        }
+
+        catalogArea.style.display = "flex";
+        document.getElementById("catalogTitle").innerHTML =
+          "📚 Tất Cả Sách Hiện Có";
+        renderCatalog(false);
+        updateActiveNav("catalog");
+        if (!currentUser) authPanel.style.display = "block";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function promptLogin() {
+        showToast("Vui lòng đăng nhập để sử dụng chức năng này.", "info");
+        handleNavClick("catalog");
+        toggleAuthMode(true);
+        authPanel.style.display = "block";
+        document.getElementById("profileDropdown").style.display = "none";
+      }
+
+      function renderHotBooks() {
+        const hotBooks = books.filter((b) => b.hot).slice(0, 4);
+        const container = document.getElementById("hotBooksContainer");
+        container.innerHTML = "";
+
+        if (hotBooks.length === 0) {
+          hotBooksSection.style.display = "none";
+          return;
+        }
+        hotBooksSection.style.display = "block";
+
+        hotBooks.forEach((book, index) => {
+          const encodedBookJson = encodeURIComponent(JSON.stringify(book));
+
+          const latestUser = users.find(
+            (u) => u.email === (currentUser ? currentUser.email : null)
+          );
+          const isCurrentlyBorrowed =
+            latestUser &&
+            latestUser.borrowedBooks.some((b) => b.isbn === book.isbn);
+
+          let bookActionHTML;
+          if (currentUser) {
+            if (isCurrentlyBorrowed) {
+              bookActionHTML = `<button class="btn btn-sm btn-borrowed w-100 mt-2" disabled>Đang Mượn</button>`;
+            } else {
+              bookActionHTML = `<button class="btn btn-sm btn-success w-100 mt-2" onclick='borrowBook(JSON.parse(decodeURIComponent("${encodedBookJson}")))'><i class="fas fa-exchange-alt"></i> Mượn Sách</button>`;
+            }
+          } else {
+            bookActionHTML = `<button class="btn btn-sm btn-primary w-100 mt-2" onclick="promptLogin()"><i class="fas fa-sign-in-alt"></i> Đăng nhập</button>`;
+          }
+
+          const col = document.createElement("div");
+          col.className = `col-lg-3 col-md-6 col-12 mb-4 animate__animated animate__fadeInUp`;
+          col.style.setProperty("--animate-delay", `${index * 0.1}s`);
+
+          const card = document.createElement("div");
+          card.className = "card card-book h-100";
+          card.innerHTML = `
+            <div class="book-cover-container" onclick="${
+              currentUser
+                ? `openBookModal(JSON.parse(decodeURIComponent("${encodedBookJson}")))`
+                : `promptLogin()`
+            }">
+                <img src="${book.cover}" class="book-cover"/>
+            </div>
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div class="book-info">
+                    <h6 class="card-title">${book.title}</h6>
+                    <p class="mb-1 text-muted" style="font-size: 0.9rem;">${
+                      book.author
+                    }</p>
+                    <p class="mb-2">${renderRating(book.rating)}</p>
+                </div>
+                ${bookActionHTML}
+            </div>
+        `;
+          container.appendChild(col).appendChild(card);
+        });
+      }
+
+      function renderFeaturedBook() {
+        const featuredBook = books.find((b) => b.featured);
+        const content = document.getElementById("featuredBookContent");
+
+        if (!featuredBook) {
+          featuredBookSection.style.display = "none";
+          return;
+        }
+        featuredBookSection.style.display = "block";
+
+        const encodedBookJson = encodeURIComponent(
+          JSON.stringify(featuredBook)
+        );
+
+        const latestUser = users.find(
+          (u) => u.email === (currentUser ? currentUser.email : null)
+        );
+        const isBorrowed = latestUser && isBookBorrowed(featuredBook.isbn);
+
+        const borrowButtonHTML = isBorrowed
+          ? `<button class="btn btn-borrowed mt-3 me-2" disabled><i class="fas fa-check"></i> Đang Mượn</button>`
+          : `<button class="btn btn-success mt-3 me-2" onclick='borrowBook(JSON.parse(decodeURIComponent("${encodedBookJson}")))'><i class="fas fa-exchange-alt"></i> Mượn Sách</button>`;
+
+        const actionButtons = currentUser
+          ? `<div class="d-flex gap-2">
+             ${borrowButtonHTML}
+             <button class="btn btn-primary mt-3" onclick='openBookModal(JSON.parse(decodeURIComponent("${encodedBookJson}")))'><i class="fas fa-search"></i> Chi tiết</button>
+           </div>`
+          : `<button class="btn btn-primary mt-3" onclick="promptLogin()"><i class="fas fa-sign-in-alt"></i> Đăng nhập để đọc</button>`;
+
+        content.innerHTML = `
+        <div class="col-md-4 text-center p-4">
+            <img src="${
+              featuredBook.cover
+            }" class="img-fluid featured-cover animate__animated animate__zoomIn" alt="${
+          featuredBook.title
+        }" style="max-height: 300px;">
+        </div>
+        <div class="col-md-8 d-flex align-items-center">
+            <div class="card-body featured-content animate__animated animate__fadeInRight">
+                <span class="badge bg-primary mb-2"><i class="fas fa-trophy me-1"></i> Sách Nổi Bật/Đề xuất</span>
+                <h4 class="card-title text-dark">${featuredBook.title}</h4>
+                <p class="card-text"><b>Tác giả:</b> ${featuredBook.author}</p>
+                <p class="card-text">${renderRating(featuredBook.rating)}</p>
+                <p class="card-text text-muted" style="font-size: 0.95rem;">${featuredBook.description.substring(
+                  0,
+                  200
+                )}...</p>
+                ${actionButtons}
+            </div>
+        </div>
+    `;
+      }
+
+      function updateLoginState() {
+        const profileDropdown = document.getElementById("profileDropdown");
+        const loginButton = document.getElementById("btnLoginRegister");
+        const authPanel = document.getElementById("authPanel");
+
+        if (currentUser) {
+          const latestUser = users.find((u) => u.email === currentUser.email);
+          if (latestUser) currentUser = latestUser;
+
+          profileDropdown.style.display = "block";
+          loginButton.style.display = "none";
+          authPanel.style.display = "none";
+          document.getElementById("navUserName").textContent = currentUser.name;
+          document.getElementById("dropdownUserName").textContent =
+            currentUser.name;
+
+          if (contributionPage.style.display !== "none") {
+            renderContributionPage();
+          }
+        } else {
+          profileDropdown.style.display = "none";
+          loginButton.style.display = "block";
+
+          if (
+            catalogArea.style.display !== "none" ||
+            document.getElementById("heroBanner").style.display !== "none"
+          ) {
+            authPanel.style.display = "block";
+            toggleAuthMode(true);
+          }
+
+          if (contributionPage.style.display !== "none") {
+            renderContributionPage();
+          }
+        }
+      }
+
+      function toggleAuthMode(loginMode) {
+        isLogin = loginMode;
+        document.getElementById("authTitle").innerHTML = isLogin
+          ? '<i class="fas fa-sign-in-alt"></i> Đăng nhập vào thư viện'
+          : '<i class="fas fa-user-plus"></i> Đăng ký tài khoản mới';
+        document.getElementById("authBtn").textContent = isLogin
+          ? "Đăng nhập"
+          : "Đăng ký";
+        document.getElementById("authNameDiv").style.display = isLogin
+          ? "none"
+          : "block";
+        document.getElementById("toggleAuth").innerHTML = isLogin
+          ? "Chưa có tài khoản? Đăng ký ngay!"
+          : "Đã có tài khoản? Đăng nhập!";
+        document.getElementById("authEmail").value = "";
+        document.getElementById("authPassword").value = "";
+        document.getElementById("authName").value = "";
+      }
+
+      function handleAuthSubmit(e) {
+        e.preventDefault();
+        const email = document.getElementById("authEmail").value;
+        const password = document.getElementById("authPassword").value;
+        const name =
+          document.getElementById("authName").value || email.split("@")[0];
+
+        if (isLogin) {
+          const user = users.find(
+            (u) => u.email === email && u.password === password
+          );
+          if (user) {
+            currentUser = user;
+            localStorage.setItem("currentUser", JSON.stringify(currentUser));
+            showToast(`Chào mừng trở lại, ${currentUser.name}!`, "success");
+
+            recordActivity(
+              "Đăng nhập",
+              `Đăng nhập thành công vào hệ thống.`,
+              "info"
+            );
+
+            updateLoginState();
+            handleNavClick("home");
+          } else {
+            showToast(
+              "Email hoặc mật khẩu không đúng. Vui lòng thử lại.",
+              "error"
+            );
+          }
+        } else {
+          if (users.some((u) => u.email === email)) {
+            showToast("Email đã được đăng ký. Vui lòng Đăng nhập!", "error");
+            return;
+          }
+          if (password.length < 6) {
+            showToast("Mật khẩu phải dài ít nhất 6 ký tự.", "error");
+            return;
+          }
+          const newUser = {
+            name,
+            email,
+            password,
+            favorites: [],
+            borrowedBooks: [],
+            contributions: [],
+            created: new Date().toLocaleDateString("vi-VN"),
+            updated: new Date().toLocaleDateString("vi-VN"),
+            activityHistory: [],
+          };
+
+          currentUser = newUser;
+          updateUser(newUser);
+
+          recordActivity("Đăng ký", `Tạo tài khoản mới thành công.`, "success");
+
+          showToast("Đăng ký thành công! Chào mừng bạn.", "success");
+          updateLoginState();
+          handleNavClick("home");
+        }
+      }
+
+      function handleLogout() {
+        recordActivity("Đăng xuất", `Đăng xuất khỏi hệ thống.`, "info");
+
+        currentUser = null;
+        localStorage.removeItem("currentUser");
+        showToast("Bạn đã đăng xuất thành công.", "info");
+        updateLoginState();
+        isViewingFavorites = false;
+        handleNavClick("home");
+      }
+
+      function handleChangePassword(e) {
+        e.preventDefault();
+        if (!currentUser) {
+          changePasswordModal.hide();
+          return promptLogin();
+        }
+
+        const currentPassword =
+          document.getElementById("currentPassword").value;
+        const newPassword = document.getElementById("newPassword").value;
+        const confirmNewPassword =
+          document.getElementById("confirmNewPassword").value;
+
+        const latestUser = users.find((u) => u.email === currentUser.email);
+
+        if (currentPassword !== latestUser.password) {
+          showToast("Mật khẩu hiện tại không đúng.", "error");
+          return;
+        }
+
+        if (newPassword.length < 6) {
+          showToast("Mật khẩu mới phải dài ít nhất 6 ký tự.", "error");
+          return;
+        }
+
+        if (newPassword !== confirmNewPassword) {
+          showToast("Xác nhận mật khẩu mới không khớp.", "error");
+          return;
+        }
+
+        if (newPassword === currentPassword) {
+          showToast("Mật khẩu mới không được trùng với mật khẩu cũ.", "error");
+          return;
+        }
+
+        latestUser.password = newPassword;
+        latestUser.updated = new Date().toLocaleDateString("vi-VN");
+        updateUser(latestUser);
+
+        recordActivity(
+          "Đổi mật khẩu",
+          `Thay đổi mật khẩu tài khoản thành công.`,
+          "warning"
+        );
+
+        changePasswordModal.hide();
+        document.getElementById("changePasswordForm").reset();
+        showToast(
+          "Đổi mật khẩu thành công! Vui lòng sử dụng mật khẩu mới từ lần đăng nhập sau.",
+          "success"
+        );
+        renderProfilePage();
+      }
+
+      function handleContributionSubmit(e) {
+        e.preventDefault();
+
+        const contributorName =
+          document.getElementById("contributorName").value || "Khách ẩn danh";
+        const contributorEmail = document.getElementById("contributorEmail")
+          .disabled
+          ? currentUser.email
+          : document.getElementById("contributorEmail").value;
+
+        const contributedTitle =
+          document.getElementById("contributedTitle").value;
+        const contributedLink =
+          document.getElementById("contributedLink").value;
+
+        if (!contributorEmail || !contributedTitle || !contributedLink) {
+          showToast("Vui lòng điền đầy đủ các trường bắt buộc.", "error");
+          return;
+        }
+
+        const contribution = {
+          name: contributedTitle,
+          link: contributedLink,
+          status: "Đang chờ duyệt",
+          date: new Date().toLocaleDateString("vi-VN"),
+        };
+
+        if (currentUser) {
+          const latestUser =
+            users.find((u) => u.email === currentUser.email) || currentUser;
+          if (!latestUser.contributions) {
+            latestUser.contributions = [];
+          }
+          latestUser.contributions.unshift(contribution);
+          updateUser(latestUser);
+          recordActivity(
+            "Đóng góp sách",
+            `Đã gửi đóng góp sách <span class="text-book">${contributedTitle}</span>.`,
+            "info"
+          );
+        }
+
+        showToast(
+          "Cảm ơn bạn đã đóng góp! Chúng tôi sẽ xem xét sớm.",
+          "success"
+        );
+        contributionModal.hide();
+
+        fillContributionForm();
+
+        if (contributionPage.style.display !== "none") {
+          renderContributionPage();
+        }
+      }
+
+      function renderContributionPage() {
+        const latestUser = currentUser
+          ? users.find((u) => u.email === currentUser.email) || currentUser
+          : null;
+        const myContributionsContainer = document.getElementById(
+          "myContributionsContainer"
+        );
+
+        document.getElementById("totalContributions").textContent =
+          53 +
+          (latestUser
+            ? latestUser.contributions.filter((c) => c.status === "Đã duyệt")
+                .length
+            : 0);
+        document.getElementById("contributorCount").textContent =
+          12 + (latestUser ? 1 : 0);
+
+        if (latestUser) {
+          const contributions = latestUser.contributions || [];
+
+          let html = `<h6><i class="fas fa-clipboard-list me-1 text-info"></i> ${contributions.length} Đóng góp đã gửi:</h6>`;
+
+          if (contributions.length === 0) {
+            html +=
+              '<p class="text-muted small">Bạn chưa gửi đóng góp nào. Hãy gửi ngay!</p>';
+          } else {
+            contributions.slice(0, 5).forEach((contribution) => {
+              let statusBadgeClass = "bg-warning";
+              let borderColor = "border-warning";
+              if (contribution.status === "Đã duyệt") {
+                statusBadgeClass = "bg-success";
+                borderColor = "border-success";
+              } else if (contribution.status === "Từ chối") {
+                statusBadgeClass = "bg-danger";
+                borderColor = "border-danger";
+              }
+
+              html += `
+                    <div class="card p-2 mb-2 ${borderColor} shadow-sm" style="font-size: 0.9rem;">
+                        <p class="mb-1 fw-bold">${contribution.name}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge ${statusBadgeClass}">${contribution.status}</span>
+                            <span class="text-muted" style="font-size: 0.75rem;">${contribution.date}</span>
+                        </div>
+                    </div>
+                `;
+            });
+          }
+
+          myContributionsContainer.innerHTML = html;
+        } else {
+          myContributionsContainer.innerHTML = `
+            <p class="text-muted" style="font-size: 0.9rem;">Vui lòng đăng nhập để theo dõi lịch sử và trạng thái các đóng góp đã gửi.</p>
+            <button class="btn btn-sm btn-outline-primary w-100" onclick="promptLogin()"><i class="fas fa-sign-in-alt me-1"></i> Đăng nhập</button>
+        `;
+        }
+      }
+
+      function getBookByISBN(isbn) {
+        return books.find((b) => b.isbn === isbn);
+      }
+
+      function isBookBorrowed(isbn) {
+        if (!currentUser || !currentUser.borrowedBooks) return false;
+        const latestUser =
+          users.find((u) => u.email === currentUser.email) || currentUser;
+        return latestUser.borrowedBooks.some((b) => b.isbn === isbn);
+      }
+
+      function renderRating(rating) {
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = rating % 1 !== 0;
+        let html = "";
+        for (let i = 0; i < 5; i++) {
+          if (i < fullStars) {
+            html += '<i class="fas fa-star"></i>';
+          } else if (i === fullStars && hasHalfStar) {
+            html += '<i class="fas fa-star-half-alt"></i>';
+          } else {
+            html += '<i class="far fa-star"></i>';
+          }
+        }
+        return `<span class="book-rating">${html} <span style="font-size: 0.9rem; color: #6c757d;">(${rating.toFixed(
+          1
+        )})</span></span>`;
+      }
+
+      function toggleFavorite(e, isbn) {
+        e.stopPropagation();
+        if (!currentUser) return promptLogin();
+
+        const latestUser = users.find((u) => u.email === currentUser.email);
+        if (!latestUser) return;
+
+        const book = getBookByISBN(isbn);
+        const bookIndex = latestUser.favorites.indexOf(isbn);
+
+        if (bookIndex > -1) {
+          latestUser.favorites.splice(bookIndex, 1);
+          showToast(`Đã xóa "${book.title}" khỏi danh sách yêu thích.`, "info");
+          recordActivity(
+            "Xóa Yêu thích",
+            `Đã xóa sách <span class="text-book">${book.title}</span> khỏi mục yêu thích.`,
+            "info"
+          );
+        } else {
+          latestUser.favorites.push(isbn);
+          showToast(
+            `Đã thêm "${book.title}" vào danh sách yêu thích!`,
+            "success"
+          );
+          recordActivity(
+            "Thêm Yêu thích",
+            `Đã thêm sách <span class="text-book">${book.title}</span> vào mục yêu thích.`,
+            "success"
+          );
+        }
+
+        updateUser(latestUser);
+
+        if (isViewingFavorites) {
+          renderCatalog(true);
+        }
+        if (document.getElementById("profilePage").style.display !== "none") {
+          renderProfilePage();
+        } else {
+          renderCatalog(false);
+        }
+
+        renderHotBooks();
+        renderFeaturedBook();
+      }
+
+      function openBookModal(book) {
+        if (!currentUser) return promptLogin();
+
+        document.getElementById("modalCover").src = book.cover;
+        document.getElementById("modalTitle").textContent = book.title;
+        document.getElementById(
+          "modalAuthor"
+        ).textContent = `Tác giả: ${book.author}`;
+        document.getElementById("modalRating").innerHTML = renderRating(
+          book.rating
+        );
+        document.getElementById("modalCategory").textContent = book.category;
+        document.getElementById("modalISBN").textContent = book.isbn;
+        document.getElementById("modalPublishedYear").textContent =
+          book.publishedYear;
+        document.getElementById("modalPages").textContent =
+          book.pages + " trang";
+        document.getElementById("modalDescription").textContent =
+          book.description;
+
+        const latestUser =
+          users.find((u) => u.email === currentUser.email) || currentUser;
+        const isBorrowed = latestUser.borrowedBooks.some(
+          (b) => b.isbn === book.isbn
+        );
+        const actionsContainer = document.getElementById("modalActions");
+
+        const borrowButtonHTML = isBorrowed
+          ? `<button class="btn btn-borrowed" disabled><i class="fas fa-check"></i> Đang Mượn</button>`
+          : `<button class="btn btn-success" onclick="borrowBook(JSON.parse(decodeURIComponent('${encodeURIComponent(
+              JSON.stringify(book)
+            )}'))); bookModal.hide();"><i class="fas fa-exchange-alt"></i> Mượn Sách (14 ngày)</button>`;
+
+        const readButtonHTML = `<a href="${book.pdf}" target="_blank" class="btn btn-outline-primary"><i class="fas fa-book-reader"></i> Tải/Đọc PDF</a>`;
+
+        actionsContainer.innerHTML = borrowButtonHTML + readButtonHTML;
+
+        document.getElementById("pdfIframe").src = book.pdf;
+
+        const descTabElement = document.getElementById("desc-tab");
+        if (descTabElement) {
+          const descTab = new bootstrap.Tab(descTabElement);
+          descTab.show();
+        }
+
+        bookModal.show();
+      }
+
+      function borrowBook(book) {
+        if (!currentUser) return promptLogin();
+
+        const latestUser = users.find((u) => u.email === currentUser.email);
+        if (!latestUser) return;
+
+        if (latestUser.borrowedBooks.some((b) => b.isbn === book.isbn)) {
+          showToast("Bạn đã mượn cuốn sách này rồi.", "error");
+          return;
+        }
+
+        const dueDate = new Date();
+        dueDate.setDate(dueDate.getDate() + 14);
+        const formattedDueDate = dueDate.toLocaleDateString("vi-VN");
+
+        latestUser.borrowedBooks.push({
+          isbn: book.isbn,
+          borrowDate: new Date().toLocaleDateString("vi-VN"),
+          dueDate: formattedDueDate,
+        });
+
+        updateUser(latestUser);
+
+        recordActivity(
+          "Mượn sách",
+          `Đã mượn sách <span class="text-book">${book.title}</span>. Hạn trả: ${formattedDueDate}.`,
+          "success"
+        );
+
+        showToast(
+          `Bạn đã mượn thành công sách: ${book.title}. Hạn trả: ${formattedDueDate}`,
+          "success"
+        );
+        renderCatalog(isViewingFavorites);
+        renderHotBooks();
+        renderFeaturedBook();
+      }
+
+      function returnBook(isbn) {
+        if (!currentUser) return;
+
+        const latestUser = users.find((u) => u.email === currentUser.email);
+        if (!latestUser) return;
+
+        const book = getBookByISBN(isbn);
+        const bookIndex = latestUser.borrowedBooks.findIndex(
+          (b) => b.isbn === isbn
+        );
+
+        if (bookIndex > -1) {
+          latestUser.borrowedBooks.splice(bookIndex, 1);
+
+          updateUser(latestUser);
+
+          recordActivity(
+            "Trả sách",
+            `Đã trả sách <span class="text-book">${book.title}</span> thành công.`,
+            "success"
+          );
+
+          showToast(`Đã trả sách "${book.title}" thành công.`, "success");
+          renderProfilePage();
+          renderCatalog(isViewingFavorites);
+          renderHotBooks();
+          renderFeaturedBook();
+        }
+      }
+
+      function renderProfilePage() {
+        if (!currentUser) return;
+
+        const latestUser =
+          users.find((u) => u.email === currentUser.email) || currentUser;
+
+        document.getElementById("profileUserName").textContent =
+          latestUser.name;
+        document.getElementById("profileUserEmail").textContent =
+          latestUser.email;
+        document.getElementById("accountCreatedDate").textContent =
+          latestUser.created;
+
+        const contributionsCount = latestUser.contributions
+          ? latestUser.contributions.length
+          : 0;
+
+        document.getElementById("borrowedCount").textContent =
+          latestUser.borrowedBooks.length;
+        document.getElementById("favoritesCount").textContent =
+          latestUser.favorites.length;
+        document.getElementById("viewCount").textContent = contributionsCount;
+
+        renderActivityHistory();
+
+        const borrowedList = document.getElementById("borrowedBooksList");
+        borrowedList.innerHTML = "";
+        if (latestUser.borrowedBooks.length === 0) {
+          borrowedList.innerHTML =
+            '<div class="col-12"><p class="text-muted"><i class="fas fa-frown me-1"></i> Bạn chưa mượn cuốn sách nào. Hãy <a href="#" onclick="handleNavClick(\'catalog\')">khám phá danh mục</a>!</p></div>';
+        } else {
+          latestUser.borrowedBooks.forEach((borrow) => {
+            const book = getBookByISBN(borrow.isbn);
+            if (book) {
+              const col = document.createElement("div");
+              col.className = "col-lg-12";
+              col.innerHTML = `
+                    <div class="book-list-item d-flex align-items-center justify-content-between shadow-sm">
+                        <div>
+                            <h6><i class="fas fa-book me-2 text-primary"></i> ${book.title}</h6>
+                            <p class="text-muted mb-1" style="font-size: 0.85rem;">Tác giả: ${book.author}</p>
+                            <p class="borrow-due-date mb-0" style="font-size: 0.9rem;"><i class="fas fa-calendar-times me-1 text-danger"></i> Hạn trả: ${borrow.dueDate}</p>
+                        </div>
+                        <button class="btn btn-sm btn-outline-success" onclick="returnBook('${book.isbn}')"><i class="fas fa-undo me-1"></i> Trả sách</button>
+                    </div>
+                `;
+              borrowedList.appendChild(col);
+            }
+          });
+        }
+
+        const favoriteList = document.getElementById("favoriteBooksList");
+        favoriteList.innerHTML = "";
+        if (latestUser.favorites.length === 0) {
+          favoriteList.innerHTML =
+            '<div class="col-12"><p class="text-muted"><i class="fas fa-star me-1"></i> Bạn chưa thêm sách nào vào mục yêu thích. Hãy <a href="#" onclick="handleNavClick(\'catalog\')">tìm kiếm ngay</a>!</p></div>';
+        } else {
+          latestUser.favorites.forEach((isbn) => {
+            const book = getBookByISBN(isbn);
+            if (book) {
+              const encodedBookJson = encodeURIComponent(JSON.stringify(book));
+              const col = document.createElement("div");
+              col.className = "col-lg-6 col-md-12";
+              col.innerHTML = `
+                    <div class="book-list-item shadow-sm">
+                        <h6><i class="fas fa-heart me-1 text-danger"></i> ${book.title}</h6>
+                        <p class="text-muted mb-2" style="font-size: 0.9rem;">Tác giả: ${book.author}</p>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-primary flex-grow-1" onclick='openBookModal(JSON.parse(decodeURIComponent("${encodedBookJson}")))'><i class="fas fa-eye me-1"></i> Chi tiết</button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="toggleFavorite(event, '${book.isbn}');"><i class="fas fa-times me-1"></i> Xóa</button>
+                        </div>
+                    </div>
+                `;
+              favoriteList.appendChild(col);
+            }
+          });
+        }
+      }
+
+      function renderActivityHistory() {
+        const latestUser =
+          users.find((u) => u.email === currentUser.email) || currentUser;
+
+        const historyList = document.getElementById("activityHistoryList");
+        historyList.innerHTML = "";
+
+        const history = latestUser.activityHistory || [];
+
+        if (history.length === 0) {
+          historyList.innerHTML =
+            '<li class="text-muted text-center py-3" style="border-left: none;"><i class="fas fa-box-open me-1"></i> Chưa có hoạt động nào được ghi lại.</li>';
+          return;
+        }
+
+        history.forEach((item) => {
+          let iconClass;
+
+          switch (item.action) {
+            case "Đăng ký":
+              iconClass = "fas fa-user-plus text-success";
+              break;
+            case "Mượn sách":
+              iconClass = "fas fa-exchange-alt text-success";
+              break;
+            case "Trả sách":
+              iconClass = "fas fa-handshake text-info";
+              break;
+            case "Thêm Yêu thích":
+              iconClass = "fas fa-heart text-danger";
+              break;
+            case "Xóa Yêu thích":
+              iconClass = "far fa-trash-alt text-info";
+              break;
+            case "Đổi mật khẩu":
+              iconClass = "fas fa-key text-warning";
+              break;
+            case "Đóng góp sách":
+              iconClass = "fas fa-hands-helping text-info";
+              break;
+            case "Đăng nhập":
+              iconClass = "fas fa-sign-in-alt text-primary";
+              break;
+            case "Đăng xuất":
+              iconClass = "fas fa-sign-out-alt text-secondary";
+              break;
+            default:
+              iconClass = "fas fa-info-circle text-info";
+          }
+
+          const li = document.createElement("li");
+          li.className = `history-item ${item.type}`;
+          li.innerHTML = `
+            <div class="history-content">
+                <div class="history-text">
+                    <span style="font-weight: 600; color: #343a40;"><i class="${iconClass} me-2"></i> ${
+            item.action
+          }:</span> ${item.detail.replace(item.action + " ", "")} 
+                </div>
+            </div>
+            <div class="history-time">${item.time}</div>
+        `;
+          historyList.appendChild(li);
+        });
+      }
+
+      function initializeFilters() {
+        const yearFilter = document.getElementById("yearFilter");
+        yearFilter.innerHTML = '<option value="All">Tất cả các năm</option>';
+        const years = [...new Set(books.map((b) => b.publishedYear))].sort(
+          (a, b) => b - a
+        );
+        years.forEach((year) => {
+          const opt = document.createElement("option");
+          opt.value = year;
+          opt.textContent = year;
+          yearFilter.appendChild(opt);
+        });
+
+        const categoryFilter = document.getElementById("categoryFilter");
+        categoryFilter.innerHTML = '<option value="All">Tất cả</option>';
+        const categories = [...new Set(books.map((b) => b.category))];
+        categories.forEach((cat) => {
+          const opt = document.createElement("option");
+          opt.value = cat;
+          opt.textContent = cat;
+          categoryFilter.appendChild(opt);
+        });
+
+        yearFilter.addEventListener("change", () => {
+          currentPage = 1;
+          renderCatalog(isViewingFavorites);
+        });
+        document.getElementById("pageFilter").addEventListener("change", () => {
+          currentPage = 1;
+          renderCatalog(isViewingFavorites);
+        });
+      }
+
+      function renderCatalog(viewFavorites = false) {
+        isViewingFavorites = viewFavorites;
+        let filteredBooks = [...books];
+
+        const searchText = document
+          .getElementById("searchInput")
+          .value.trim()
+          .toLowerCase();
+        if (searchText)
+          filteredBooks = filteredBooks.filter(
+            (b) =>
+              b.title.toLowerCase().includes(searchText) ||
+              b.author.toLowerCase().includes(searchText)
+          );
+
+        const selectedCategory =
+          document.getElementById("categoryFilter").value;
+        if (selectedCategory && selectedCategory !== "All")
+          filteredBooks = filteredBooks.filter(
+            (b) => b.category === selectedCategory
+          );
+
+        const selectedYear = document.getElementById("yearFilter").value;
+        if (selectedYear && selectedYear !== "All")
+          filteredBooks = filteredBooks.filter(
+            (b) => b.publishedYear === parseInt(selectedYear)
+          );
+
+        const selectedPages = document.getElementById("pageFilter").value;
+        if (selectedPages !== "All") {
+          filteredBooks = filteredBooks.filter((b) => {
+            if (selectedPages === "<200") return b.pages < 200;
+            if (selectedPages === "200-500")
+              return b.pages >= 200 && b.pages <= 500;
+            if (selectedPages === ">500") return b.pages > 500;
+            return true;
+          });
+        }
+
+        if (isViewingFavorites && currentUser) {
+          const latestUser =
+            users.find((u) => u.email === currentUser.email) || currentUser;
+          filteredBooks = filteredBooks.filter((b) =>
+            latestUser.favorites.includes(b.isbn)
+          );
+          document.getElementById("catalogTitle").innerHTML =
+            "💖 Sách Yêu Thích Của Bạn";
+          document.getElementById("filterPanel").style.display = "none";
+          document.getElementById("catalogArea").style.display = "flex";
+        } else {
+          document.getElementById("catalogTitle").innerHTML =
+            "📚 Tất Cả Sách Hiện Có";
+          document.getElementById("filterPanel").style.display = "block";
+        }
+
+        if (profilePage.style.display !== "none" && !isViewingFavorites) return;
+
+        const sortOption = document.getElementById("sortOption").value;
+        filteredBooks.sort((a, b) => {
+          if (sortOption === "titleAsc") return a.title.localeCompare(b.title);
+          if (sortOption === "titleDesc") return b.title.localeCompare(a.title);
+          if (sortOption === "ratingDesc") return b.rating - a.rating;
+          if (sortOption === "publishedYearDesc")
+            return b.publishedYear - a.publishedYear;
+          return 0;
+        });
+
+        if (filteredBooks.length === 0) {
+          let message = isViewingFavorites
+            ? "Bạn chưa thêm sách nào vào mục yêu thích."
+            : "Không tìm thấy sách nào khớp với tiêu chí tìm kiếm/lọc.";
+          document.getElementById(
+            "viewContainer"
+          ).innerHTML = `<div class="col-12"><p class='text-muted animate__animated animate__fadeIn p-3 border rounded'><i class="fas fa-search me-1"></i> ${message}</p></div>`;
+          document.getElementById("pagination").innerHTML = "";
+          return;
+        }
+
+        const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
+        if (currentPage > totalPages) currentPage = totalPages || 1;
+        const start = (currentPage - 1) * booksPerPage;
+        const end = start + booksPerPage;
+        const booksToShow = filteredBooks.slice(start, end);
+
+        document.getElementById("viewContainer").innerHTML = "";
+        const row = document.createElement("div");
+        row.className = "row g-4";
+
+        booksToShow.forEach((book, index) => {
+          let bookActionHTML = "";
+          let heartIconHTML = "";
+          let bookStatusHTML = "";
+          const encodedBookJson = encodeURIComponent(JSON.stringify(book));
+
+          const latestUser = users.find(
+            (u) => u.email === (currentUser ? currentUser.email : null)
+          );
+          const isCurrentlyBorrowed =
+            latestUser &&
+            latestUser.borrowedBooks.some((b) => b.isbn === book.isbn);
+          const isFav = currentUser && latestUser.favorites.includes(book.isbn);
+
+          const heartIconClass = isFav ? "fas fa-heart" : "far fa-heart";
+          heartIconHTML = `<span class="favorite" onclick="toggleFavorite(event,'${
+            book.isbn
+          }')" style="color: ${isFav ? "#dc3545" : "#aaa"};">${
+            heartIconClass ? `<i class="${heartIconClass}"></i>` : ""
+          }</span>`;
+
+          if (currentUser) {
+            if (isCurrentlyBorrowed) {
+              bookStatusHTML = `<div class="book-status status-borrowed">Đang Mượn</div>`;
+              bookActionHTML = `<button class="btn btn-sm btn-borrowed w-100" disabled>Đang Mượn</button>`;
+            } else {
+              bookStatusHTML = `<div class="book-status status-available">Sẵn có</div>`;
+              bookActionHTML = `<button class="btn btn-sm btn-success w-100" onclick='borrowBook(JSON.parse(decodeURIComponent("${encodedBookJson}")))'><i class="fas fa-exchange-alt"></i> Mượn Sách</button>`;
+            }
+          } else {
+            bookStatusHTML = `<div class="book-status status-guest">Đăng nhập để mượn</div>`;
+            bookActionHTML = `<button class="btn btn-sm btn-primary w-100" onclick="promptLogin()"><i class="fas fa-sign-in-alt"></i> Đăng nhập</button>`;
+          }
+
+          const col = document.createElement("div");
+          col.className = `col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 animate__animated animate__fadeInUp`;
+          col.style.setProperty("--animate-delay", `${index * 0.05}s`);
+
+          const card = document.createElement("div");
+          card.className = "card card-book h-100";
+          card.innerHTML = `
+            <div class="book-cover-container" onclick="${
+              currentUser
+                ? `openBookModal(JSON.parse(decodeURIComponent("${encodedBookJson}")))`
+                : `promptLogin()`
+            }">
+                <img src="${book.cover}" class="book-cover"/>
+            </div>
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div class="book-info">
+                    <h6 class="card-title">${book.title} ${heartIconHTML}</h6>
+                    ${bookStatusHTML} 
+                    <p class="mb-1 text-muted" style="font-size: 0.85rem;">Tác giả: ${
+                      book.author
+                    }</p>
+                    <p class="mb-2">${renderRating(book.rating)}</p>
+                </div>
+                ${bookActionHTML}
+                <button class="btn btn-sm btn-outline-secondary w-100 mt-2" onclick="${
+                  currentUser
+                    ? `openBookModal(JSON.parse(decodeURIComponent("${encodedBookJson}")))`
+                    : `promptLogin()`
+                }"><i class="fas fa-eye me-1"></i> Xem Chi tiết</button>
+            </div>
+        `;
+          document
+            .getElementById("viewContainer")
+            .appendChild(col)
+            .appendChild(card);
+        });
+
+        const pagination = document.getElementById("pagination");
+        pagination.innerHTML = "";
+
+        const liPrev = document.createElement("li");
+        liPrev.className = `page-item ${currentPage === 1 ? "disabled" : ""}`;
+        liPrev.innerHTML = `<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>`;
+        liPrev.addEventListener("click", (e) => {
+          e.preventDefault();
+          if (currentPage > 1) {
+            currentPage--;
+            renderCatalog(isViewingFavorites);
+            window.scrollTo({
+              top: document.getElementById("catalogTitle").offsetTop - 100,
+              behavior: "smooth",
+            });
+          }
+        });
+        pagination.appendChild(liPrev);
+        for (let i = 1; i <= totalPages; i++) {
+          const li = document.createElement("li");
+          li.className = `page-item ${i === currentPage ? "active" : ""}`;
+          li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+          li.addEventListener("click", (e) => {
+            e.preventDefault();
+            currentPage = i;
+            renderCatalog(isViewingFavorites);
+            window.scrollTo({
+              top: document.getElementById("catalogTitle").offsetTop - 100,
+              behavior: "smooth",
+            });
+          });
+          pagination.appendChild(li);
+        }
+
+        const liNext = document.createElement("li");
+        liNext.className = `page-item ${
+          currentPage === totalPages ? "disabled" : ""
+        }`;
+        liNext.innerHTML = `<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>`;
+        liNext.addEventListener("click", (e) => {
+          e.preventDefault();
+          if (currentPage < totalPages) {
+            currentPage++;
+            renderCatalog(isViewingFavorites);
+            window.scrollTo({
+              top: document.getElementById("catalogTitle").offsetTop - 100,
+              behavior: "smooth",
+            });
+          }
+        });
+        pagination.appendChild(liNext);
+      }
+
+      function hidePreloader() {
+        const preloader = document.getElementById("preloader");
+        if (preloader) {
+          preloader.style.opacity = "0";
+          setTimeout(() => {
+            preloader.style.display = "none";
+          }, 500);
+        }
+      }
+
+      initializeFilters();
+
+      document
+        .getElementById("authForm")
+        .addEventListener("submit", handleAuthSubmit);
+      document.getElementById("toggleAuth").addEventListener("click", () => {
+        toggleAuthMode(!isLogin);
+      });
+      document
+        .getElementById("btnLogout")
+        .addEventListener("click", handleLogout);
+      document.getElementById("searchInput").addEventListener("input", () => {
+        currentPage = 1;
+        renderCatalog(isViewingFavorites);
+      });
+      document
+        .getElementById("categoryFilter")
+        .addEventListener("change", () => {
+          currentPage = 1;
+          renderCatalog(isViewingFavorites);
+        });
+      document.getElementById("sortOption").addEventListener("change", () => {
+        currentPage = 1;
+        renderCatalog(isViewingFavorites);
+      });
+      document.getElementById("homeLink").addEventListener("click", (e) => {
+        e.preventDefault();
+        handleNavClick("home");
+      });
+      document
+        .getElementById("btnContribute")
+        .addEventListener("click", (e) => {
+          e.preventDefault();
+          handleNavClick("contributionPage");
+        });
+      document
+        .getElementById("contributionForm")
+        .addEventListener("submit", handleContributionSubmit);
+      document
+        .getElementById("changePasswordForm")
+        .addEventListener("submit", handleChangePassword);
+
+      updateLoginState();
+      handleNavClick("home");
+      setTimeout(hidePreloader, 1000);
+    </script>
+  </body>
+</html>
